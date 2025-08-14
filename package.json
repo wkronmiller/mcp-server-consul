@@ -1,6 +1,6 @@
 {
   "name": "@wkronmiller/consul-mcp-server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "MCP Server for interacting with HashiCorp Consul",
   "license": "MIT",
   "author": "William Rory Kronmiller",

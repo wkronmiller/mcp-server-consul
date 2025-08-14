@@ -2,6 +2,30 @@
 
 A Model Context Protocol (MCP) server for interacting with HashiCorp Consul. This server provides read-only access to Consul's key-value store, service catalog, health checks, and cluster status.
 
+## MCP Server Setup
+
+Use the `CONSUL_HOST` environment variable to specify the Consul server URL. 
+The MCP server will use this URL to interact with the Conusl API.
+
+You can start up the stio MCP server using `npx -y -p @wkronmiller/consul-mcp-server consul-mcp-server` command.
+
+### Opencode Configuration
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "consul": {
+      "type": "local",
+      "command": ["npx", "-y", "-p", "@wkronmiller/consul-mcp-server", "consul-mcp-server"],
+      "environment": {
+        "CONSUL_HOST": "192.168.6.2"
+      }
+    }
+  }
+}
+```
+
 ## Features
 
 ### Key-Value Store
@@ -29,102 +53,6 @@ A Model Context Protocol (MCP) server for interacting with HashiCorp Consul. Thi
 - `consul_health_service` - Get nodes and health info for a service
 - `consul_health_state` - Get checks in a given state
 
-## Configuration
-
-The server can be configured using environment variables:
-
-- `CONSUL_HOST` - Consul agent host (default: 127.0.0.1)
-- `CONSUL_PORT` - Consul agent port (default: 8500)
-- `CONSUL_SECURE` - Use HTTPS (default: false)
-- `CONSUL_TOKEN` - ACL token for authentication
-
-## Installation
-
-```bash
-npm install -g @wkronmiller/consul-mcp-server
-```
-
-## Usage
-
-### With MCP Client
-
-Add to your MCP client configuration:
-
-```json
-{
-  "mcpServers": {
-    "consul": {
-      "command": "consul-mcp-server",
-      "env": {
-        "CONSUL_HOST": "localhost",
-        "CONSUL_PORT": "8500",
-        "CONSUL_TOKEN": "your-acl-token"
-      }
-    }
-  }
-}
-```
-
-### Direct Usage
-
-```bash
-# Set environment variables
-export CONSUL_HOST=localhost
-export CONSUL_PORT=8500
-export CONSUL_TOKEN=your-acl-token
-
-# Run the server
-consul-mcp-server
-```
-
-## Examples
-
-### Get a key from KV store
-```json
-{
-  "name": "consul_kv_get",
-  "arguments": {
-    "key": "config/app/database"
-  }
-}
-```
-
-### List all services
-```json
-{
-  "name": "consul_catalog_services",
-  "arguments": {}
-}
-```
-
-### Get health status of a service
-```json
-{
-  "name": "consul_health_service",
-  "arguments": {
-    "service": "web",
-    "passing": true
-  }
-}
-```
-
-### Get cluster leader
-```json
-{
-  "name": "consul_status_leader",
-  "arguments": {}
-}
-```
-
-## Security
-
-This server provides **read-only** access to Consul. It does not support any write operations like:
-- Setting KV pairs
-- Registering/deregistering services
-- Creating/destroying sessions
-- Modifying health checks
-
-All operations respect Consul's ACL system when a token is provided.
 
 ## License
 
