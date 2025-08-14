@@ -1,0 +1,8 @@
+Initial commit: Add Consul MCP server implementation
+
+- Add TypeScript-based MCP server for HashiCorp Consul integration
+- Include comprehensive test suite with unit and integration tests
+- Configure GitHub Actions workflows for CI/CD and dependency review
+- Set up Docker-based integration testing environment
+- Add proper TypeScript configuration and Vitest test framework
+- Include documentation for Consul integration and testing setup
